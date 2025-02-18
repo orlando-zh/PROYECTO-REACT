@@ -1,0 +1,3 @@
+--------------EN TERMINAL--------------
+En la carpeta lapi se inicializa con node app.js 
+En la carpeta AXIOS se inicializa con npm start
