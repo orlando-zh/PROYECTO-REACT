@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import Home from './Screens/Home';
+import Modulo1 from './Screens/Modulo1';
+import API from './Screens/API';
+import './style.css';
+import './img/fondo.avif';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="">
+      <Router>
+        <NavBar />
+        <Routes>
+          {/* Ruta predeterminada que redirige a /home */}
+          <Route path="/" element={<Navigate to="/Home" />} />
+          
+          <Route path="/home" element={<Home />} />
+          <Route path="/modulo1" element={<Modulo1 />} />
+          <Route path="/API" element={<API />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
