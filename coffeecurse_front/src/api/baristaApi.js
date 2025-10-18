@@ -11,3 +11,13 @@ export const getBaristas = async () => {
     throw err;
   }
 };
+
+export const postBaristas = async (newBarista) => {
+    try {
+        const res = await axios.post(API_URL, newBarista); // enviamos el objeto al backend
+        return res.data;
+    } catch (err) {
+        console.error("Error creando barista:", err);
+        throw err;
+    }
+};

@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { getBaristas } from '../api/baristaApi';
 import fondo from '../img/fond_API.jpg';
 import coffeelog from '../img/coffeelog.png';
-import facebook from '../img/facebook.png';
-import instagram from '../img/instagram.png';
-import whatsapp from '../img/whatsapp.png';
-import UNIVO from '../img/UNIVO.jpg';
 
-function App() {
-  const [users, setUsers] = useState([]);
 
-  const fetchData = () => {
-  return axios.get("http://localhost:5000/api/baristas")
-    .then((response) => setUsers(response.data));
-  }
+function API() {
+    const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+    // Llamamos a la API usando la función importada
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getBaristas();
+                setUsers(data);
+            } catch (err) {
+                console.error("Error fetching baristas:", err);
+            }
+        };
+        fetchData();
+    }, []);
+
 
   const appStyle = {
     backgroundImage: `url(${fondo})`,
@@ -48,12 +50,7 @@ function App() {
     textAlign: 'left',
   };
 
-  const footerStyle = {
-    marginTop: 'auto',  
-    backgroundColor: 'rgba(238, 194, 141, 1.0)',  
-    padding: '1rem', 
-    textAlign: 'center',
-  };
+
 
   const pdfBasePath = '/pdf/';
 
@@ -75,43 +72,47 @@ function App() {
         </div>
       </nav>
 
-      <div style={containerStyle}>
-        {users && users.length > 0 && users.map((user, index) => (
-          <div key={user._id} style={moduleStyle}>
-            <h1 style={{ color: 'brown' }}>Modulo {index + 1}</h1>
-            <ul>
-              {Array.isArray(user.modulo1) && user.modulo1.map((pdf, idx) => (
-                <p key={idx}>
-                  <a href={`${pdfBasePath}${pdf.ruta1}`} target="_blank" rel="noopener noreferrer">{pdf.nombre1}</a>
-                </p>
-              ))}
-            </ul>
-            <ul>
-              {Array.isArray(user.modulo2) && user.modulo2.map((pdf, idx) => (
-                <p key={idx}>
-                  <a href={`${pdfBasePath}${pdf.ruta2}`} target="_blank" rel="noopener noreferrer">{pdf.nombre2}</a>
-                </p>
-              ))}
-            </ul>
-            <ul>
-              {Array.isArray(user.modulo3) && user.modulo3.map((pdf, idx) => (
-                <p key={idx}>
-                  <a href={`${pdfBasePath}${pdf.ruta3}`} target="_blank" rel="noopener noreferrer">{pdf.nombre3}</a>
-                </p>
-              ))}
-            </ul>
-            <h1>ㅤ</h1>
-            <h2 style={{ color: 'brown' }}>Link Curso</h2>
-            <ul>
-              <a href={`https://youtu.be/5IDiKBiLeMk?si=aYJiff4AmXua8uuT${user.youtubeID}`} target="_blank" rel="noopener noreferrer">{user.video1}</a>
-              <a href={`https://youtu.be/EpLditg-kSQ?si=rJvLgVw8Hf1d51pZ${user.youtubeID}`} target="_blank" rel="noopener noreferrer">{user.video2}</a>
-              <a href={`https://youtu.be/6ZkFDaanXEI?si=tP2YhbRb5F-a2C3t${user.youtubeID}`} target="_blank" rel="noopener noreferrer">{user.video3}</a>
-            </ul>
-          </div>
-        ))}
-      </div>
+        {/* Contenedor de módulos */}
+        <div style={containerStyle}>
+            {users.length === 0 && <p>Cargando módulos...</p>}
 
-      {/* Modal */}
+            {users.map((modulo) => (
+                <div key={modulo._id} style={moduleStyle}>
+                    {/* Nombre del módulo */}
+                    <h1 style={{ color: 'brown' }}>{modulo.nombre}</h1>
+
+                    {/* PDF del módulo */}
+                    {modulo.ruta ? (
+                        <p>
+                            <a
+                                href={`${pdfBasePath}${modulo.ruta}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Ver PDF
+                            </a>
+                        </p>
+                    ) : (
+                        <p>No hay PDF disponible</p>
+                    )}
+
+                    {/* Video */}
+                    {modulo.video && (
+                        <>
+                            <h2 style={{ color: 'brown', marginTop: '1rem' }}>Video:</h2>
+                            <p>
+                                <a href={modulo.video} target="_blank" rel="noopener noreferrer">
+                                    Ver Video
+                                </a>
+                            </p>
+                        </>
+                    )}
+                </div>
+            ))}
+        </div>
+
+
+        {/* Modal */}
       <div className="modal">
         <span id="closeModal">
           <i className="fas fa-times"></i>
@@ -120,27 +121,8 @@ function App() {
         <p id="caption"></p>
       </div>
 
-      {/* Footer */}
-      <footer style={footerStyle} className="buttons">
-        <h3>¡Síguenos en nuestras redes sociales!</h3>
-        <div className="redes-sociales">
-          <a href="https://www.facebook.com/">
-            <img src={facebook} alt="" />
-          </a>
-          <a href="https://www.instagram.com/">
-            <img src={instagram} alt="" />
-          </a>
-          <a href="https://web.whatsapp.com/">
-            <img src={whatsapp} alt="" />
-          </a>
-          <a href="https://campus.univo.edu.sv/">
-            <img src={UNIVO} alt="" />
-          </a>
-        </div>
-        <p>&copy; 2024 UNIVO</p>
-      </footer>
     </div>
   );
 }
 
-export default App;
+export default API;

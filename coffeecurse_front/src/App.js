@@ -2,10 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './Screens/Home';
-import Modulo1 from './Screens/Modulo1';
+import Modulo from './Screens/Modulo';
 import API from './Screens/API';
 import './style.css';
 import './img/fondo.avif';
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -17,10 +18,11 @@ function App() {
           <Route path="/" element={<Navigate to="/Home" />} />
           
           <Route path="/home" element={<Home />} />
-          <Route path="/modulo1" element={<Modulo1 />} />
+          <Route path="/modulo" element={<Modulo />} />
           <Route path="/API" element={<API />} />
         </Routes>
       </Router>
+        <Footer />
     </div>
   );
 }

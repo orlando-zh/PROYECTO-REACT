@@ -1,4 +1,4 @@
-import Barista from "../models/Barista.js";
+import Barista from "../models/ModelBarista.js";
 
 // Obtener todos los documentos
 export const getBaristas = async (req, res) => {

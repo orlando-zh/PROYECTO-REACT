@@ -1,3 +1,3 @@
 --------------EN TERMINAL--------------
-En la carpeta lapi se inicializa con node app.js 
-En la carpeta AXIOS se inicializa con npm start
+En la carpeta backend_coffee se inicializa con npm run dev  
+En la carpeta coffeecurse_front se inicializa con npm start
