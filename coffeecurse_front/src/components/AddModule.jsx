@@ -3,10 +3,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import fondo from '../img/fond_API.jpg';
 import coffeelog from '../img/coffeelog.png';
-import facebook from '../img/facebook.png';
-import instagram from '../img/instagram.png';
-import whatsapp from '../img/whatsapp.png';
-import UNIVO from '../img/UNIVO.jpg';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -120,25 +116,8 @@ function App() {
         <p id="caption"></p>
       </div>
 
-      {/* Footer */}
-      <footer style={footerStyle} className="buttons">
-        <h3>¡Síguenos en nuestras redes sociales!</h3>
-        <div className="redes-sociales">
-          <a href="https://www.facebook.com/">
-            <img src={facebook} alt="" />
-          </a>
-          <a href="https://www.instagram.com/">
-            <img src={instagram} alt="" />
-          </a>
-          <a href="https://web.whatsapp.com/">
-            <img src={whatsapp} alt="" />
-          </a>
-          <a href="https://campus.univo.edu.sv/">
-            <img src={UNIVO} alt="" />
-          </a>
-        </div>
-        <p>&copy; 2024 UNIVO</p>
-      </footer>
+
+
     </div>
   );
 }
